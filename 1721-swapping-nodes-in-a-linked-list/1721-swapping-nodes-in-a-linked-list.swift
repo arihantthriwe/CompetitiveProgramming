@@ -10,38 +10,23 @@
  */
 class Solution {
     func swapNodes(_ head: ListNode?, _ k: Int) -> ListNode? {
-        var dummyHead = head
-        var count = 0
-        var length = 0
-        while dummyHead != nil{
-            count += 1
-            dummyHead = dummyHead?.next
-        }
-        dummyHead = head
-        length = count
-        count = 0
-        while dummyHead != nil{
-            count += 1
-            if(count == k){
-                break
+        var currentNode = head
+        var listLength = 0
+        var frontNode: ListNode? = nil
+        var endNode: ListNode? = nil
+        while currentNode != nil{
+            listLength += 1
+            if endNode != nil{endNode = endNode?.next}
+            
+            if listLength == k{
+                frontNode = currentNode
+                endNode = head
             }
-            dummyHead = dummyHead?.next
+            currentNode = currentNode?.next
         }
-        var firstLink = dummyHead
-        dummyHead = head
-        count = 0
-        while dummyHead != nil{
-            count += 1
-            if(count == (length - k + 1)){
-                break
-            }
-            dummyHead = dummyHead?.next
-        }
-        var lastLink = dummyHead
-        dummyHead = head
-        var copy = lastLink?.val ?? 0
-        lastLink?.val = firstLink?.val ?? 0
-        firstLink?.val = copy
-        return dummyHead
+        guard let frontVal = frontNode?.val, let endVal = endNode?.val else{return head}
+        frontNode?.val = endVal
+        endNode?.val = frontVal
+        return head
     }
 }
