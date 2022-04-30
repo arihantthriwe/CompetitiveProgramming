@@ -9,18 +9,24 @@ func findPeakElement(nums []int) int {
     if len(nums) == 1{
         return 0
     }
-    for i, num := range nums{
-        if i == 0{
-            if num > MinInt && num > nums[i+1]{
-                return i
-            }
-        }else if i == len(nums) - 1{
-            if num > MinInt && num > nums[i-1]{
-                return i
-            }
-        }else if num > nums[i-1] && num > nums[i+1]{
-            return i
+    n := len(nums)
+    if nums[n-1] > MinInt && nums[n-1] > nums[n - 2]{
+        return n - 1
+    }
+    if nums[0] > MinInt && nums[0] > nums[1]{
+        return 0
+    }
+    var (
+        left = 0
+        right = n - 1
+    )
+    for left < right{
+        mid := left + (right-left)/2
+        if nums[mid] > nums[mid + 1]{
+            right = mid
+        }else{
+            left = mid + 1
         }
     }
-    return -1
+    return left
 }
